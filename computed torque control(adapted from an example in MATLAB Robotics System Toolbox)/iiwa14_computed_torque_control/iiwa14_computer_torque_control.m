@@ -134,7 +134,7 @@ index=1:length(tau_cmd)';
 figure(1)
 for i=1:7
     subplot(2,4,i)
-    plot(index,feedForwardTorque(:,i),index,tau_cmd(:,i));
+    plot(dt*index,feedForwardTorque(:,i),dt*index,tau_cmd(:,i));
     legend('taudesired','taucmd');
     xlabel('t/s');
     ylabel('joint torque/N.m');
@@ -144,7 +144,7 @@ suptitle('joint torque');
 figure(2)
 for i=1:7
     subplot(2,4,i)
-    plot(index,QDesired(:,i),index,Q(:,i));
+    plot(dt*index,QDesired(:,i),dt*index,Q(:,i));
     legend('qdesired','qreal');
     xlabel('t/s');
     ylabel('position/rad');
@@ -154,7 +154,7 @@ suptitle('joint position');
 figure(3)
 for i=1:7
     subplot(2,4,i)
-    plot(index,QdotDesired(:,i),index,Qdot(:,i));
+    plot(dt*index,QdotDesired(:,i),dt*index,Qdot(:,i));
     legend('qdotdesired','qdotreal');
     xlabel('t/s');
     ylabel('velocity/rad');

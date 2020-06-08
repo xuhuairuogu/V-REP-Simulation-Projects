@@ -30,7 +30,7 @@ Ry = [cos(theta), 0, sin(theta);
 Rx = [1, 0, 0;
     0, cos(phi), -sin(phi);
     0, sin(phi), cos(phi)];
-EulerAngleType = 'ZYX';
+EulerAngleType = 'XYZ'; % Euler angle in vrep is xyz
 if EulerAngleType == 'XYZ'
     R = Rx*Ry*Rz;
     W = [cos(theta)*cos(psi),sin(psi),0;

@@ -30,7 +30,7 @@ Ry = [cos(theta), 0, sin(theta);
 Rx = [1, 0, 0;
     0, cos(phi), -sin(phi);
     0, sin(phi), cos(phi)];
-EulerAngleType = 'XYZ'; % Euler angle in vrep is xyz
+EulerAngleType = 'XYZ';
 if EulerAngleType == 'XYZ'
     R = Rx*Ry*Rz;
     W = [cos(theta)*cos(psi),sin(psi),0;
@@ -55,7 +55,6 @@ dJ_dt = reshape(dJ_dt_flat,3,3);
 etadot_J = [phidot,thetadot,psidot]*J;
 grad_etadot_J = jacobian(etadot_J,[phi,theta,psi]');
 C = dJ_dt - 1/2*grad_etadot_J.';
-
 % Torques in the direction of phi, theta, psi
 tau_beta = [l*k*(-u2 + u4);l*k*(-u1 + u3);b*(-u1+u2-u3+u4)];
 % tau_beta = [l*k*(u2 - u4);l*k*(-u1 + u3);b*(-u1+u2-u3+u4)];
@@ -89,7 +88,7 @@ f = Function('f',{state,control},{rhs});
 % xk = [1,1,1,1,1,1,0.1,0.1,0.1,0.1,0.1,0.1]';
 % uk = [1,2,3,4]';
 % test Function object
-% f_casadi_value = f(xk,uk);
+% f_casadi_value = f(xk,uk)
 % f_matlab_value = QuadrotorStateFcn(xk,uk);
 % [A_casadi_value,B_casadi_value] = dfdx_dfdu(xk,uk);
 % [A_matlab_value,B_matlab_value] = QuadrotorStateJacobianFcn(xk,uk);
@@ -108,7 +107,7 @@ f = Function('f',{state,control},{rhs});
 % sampling period
 T = 0.1;
 % prediction horizon
-N = 18;
+N = 20;
 % decision variables
 U = SX.sym('U',length_control,N);
 % parameters(init state + reference states + reference controls)
@@ -121,8 +120,8 @@ obj = 0;
 G = [];
 % state weighting matrices
 Q = zeros(12,12);
-Q(1:3,1:3) = 10*eye(3);
-Q(4:6,4:6) = 5*eye(3);
+Q(1:3,1:3) = 1*eye(3);
+Q(4:6,4:6) = 1*eye(3);
 % control weighting matrices
 R = 0.1*eye(4);
 % init state
@@ -152,7 +151,7 @@ OPT_variables = [reshape(X,length_state*(N+1),1);reshape(U,length_control*N,1)];
 nlp_prob = struct('f',obj,'x',OPT_variables,'g',G,'p',P);
 % options for OCP solver
 opts = struct;
-opts.ipopt.max_iter = 200;
+opts.ipopt.max_iter = 300;
 opts.ipopt.print_level =0;%0,3
 opts.print_time = 0;
 opts.ipopt.acceptable_tol =1e-6;
@@ -175,4 +174,5 @@ args.ubx(length_state*(N+1)+2:length_control:length_state*(N+1)+length_control*N
 args.ubx(length_state*(N+1)+3:length_control:length_state*(N+1)+length_control*N,1) = uupper(3);
 args.ubx(length_state*(N+1)+4:length_control:length_state*(N+1)+length_control*N,1) = uupper(4);
 save NMPC_problem_definition.mat length_state length_control length_state_control f T N solver args 
+clear;
 end

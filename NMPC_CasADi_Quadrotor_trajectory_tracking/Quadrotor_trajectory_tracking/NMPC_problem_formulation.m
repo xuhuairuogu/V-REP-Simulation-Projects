@@ -53,8 +53,8 @@ dJ_dt_flat = dJ_deulerangle_flat*[phidot,thetadot,psidot]';
 dJ_dt = reshape(dJ_dt_flat,3,3);
 
 etadot_J = [phidot,thetadot,psidot]*J;
-grad_etadot_J = jacobian(etadot_J,[phi,theta,psi]')';
-C = dJ_dt - 1/2*grad_etadot_J;
+grad_etadot_J = jacobian(etadot_J,[phi,theta,psi]');
+C = dJ_dt - 1/2*grad_etadot_J.';
 
 % Torques in the direction of phi, theta, psi
 tau_beta = [l*k*(-u2 + u4);l*k*(-u1 + u3);b*(-u1+u2-u3+u4)];

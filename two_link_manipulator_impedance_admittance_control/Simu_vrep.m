@@ -3,7 +3,7 @@ disp('Program started');
 % control mode (0: impedance control
 %               1: admittance control(velocity command)
 %               2: admittance control(position command))
-control_mode = 1;
+control_mode = 0;
 
 % reference trajectory mode (0: horizontal line
 %                            1: circle)

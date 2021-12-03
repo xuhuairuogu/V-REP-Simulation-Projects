@@ -1,6 +1,6 @@
 # V-REP-Simulation-Projects
 Learning Robotics by Playing with V-REP
-
+# NOTE: ALL of the projeccts are successfully run on V-REP 4.1 and MATLAB 2020a 
 ## The right way to use force sensor in V-REP （4 steps totally, the step 3 is crucial to guarantee the validity of force/torque data）
 ### 1. get force sensor handle  
 `[res,forcesensor] = vrep.simxGetObjectHandle(id,'Force_sensor',vrep.simx_opmode_oneshot_wait);`
